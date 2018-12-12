@@ -1,4 +1,22 @@
-Schemes populated after 2 passes through the Rules.
+Dependency Graph
+  R0: R1
+  R1: R2
+  R2: R3
+  R3: R4
+  R4: R5
+  R5: R6
+  R6: R7
+  R7: R8
+  R8:
 
-z(a,b,c,d)? Yes(1)
-  a='2', b='2', c='2', d='4'
+Reverse Graph
+  R0:
+  R1: R0
+  R2: R1
+  R3: R2
+  R4: R3
+  R5: R4
+  R6: R5
+  R7: R6
+  R8: R7
+

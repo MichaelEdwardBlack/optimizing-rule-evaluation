@@ -1,8 +1,10 @@
-Schemes populated after 2 passes through the Rules.
+Dependency Graph
+  R0: R0
+  R1: R1 R2
+  R2:
 
-cn('CS101',Name)? Yes(3)
-  Name='C. Brown'
-  Name='P. Patty'
-  Name='Snoopy'
-ncg('Snoopy',Course,Grade)? Yes(1)
-  Course='CS101', Grade='C'
+Reverse Graph
+  R0: R0
+  R1: R1
+  R2: R1
+

@@ -1,3 +1,10 @@
-Schemes populated after 10 passes through the Rules.
+Dependency Graph
+  R0: R1 R2
+  R1: R0
+  R2: R0 R1
 
-j('a')? Yes(1)
+Reverse Graph
+  R0: R1 R2
+  R1: R0 R2
+  R2: R0
+
