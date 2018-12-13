@@ -1,7 +1,7 @@
 #include <map>
 #include <sstream>
 #include "relation.h"
-#include "parser.h"
+#include "graph.h"
 
 using namespace std;
 
@@ -13,7 +13,9 @@ public:
   void doRules(vector<Rule> rules);
   void doQueries(vector<Predicate> queries);
   bool match(string parameter);
+  bool isTrivial(vector<Rule> rules);
   string printRuleResults();
+  string printOptimizedRuleResults(vector<Rule> rules);
   string printQueryResults();
   string printTables(); //for testing purposes
 private:

@@ -2,7 +2,7 @@
 INPUT_PATH="test/inputs"
 OUTPUT_PATH="test/outputs"
 EXPECTED_PATH="test/expected_outputs"
-PROGRAM="lab4"
+PROGRAM="part2.o"
 START=$(date +%s)
 END=$(date +%s)
 if [ $# = 0 ]; then

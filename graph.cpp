@@ -103,7 +103,7 @@ string Graph::printGraph() {
   stringstream ss;
   ss << "Dependency Graph";
   for(auto foward : graph) {
-    ss << "\n  R" << foward.first << ":";
+    ss << "\nR" << foward.first << ":";
     ss << foward.second.printAdjacentNodes();
   }
   ss << "\n\n";
@@ -116,7 +116,7 @@ string Graph::printReverseGraph() {
 
   ss << "Reverse Graph";
   for(auto reverse : reverse_graph) {
-    ss << "\n  R" << reverse.first << ":";
+    ss << "\nR" << reverse.first << ":";
     ss << reverse.second.printAdjacentNodes();
   }
   ss << "\n\n";

@@ -19,8 +19,13 @@ void Node::insertAdjacentNodes(int rule_index) {
 
 string Node::printAdjacentNodes() {
   stringstream ss;
+  int count = 0;
   for(auto adjacent_node : dependencies) {
-    ss << " R" << adjacent_node;
+    count++;
+    if (count > 1) {
+      ss << ",";
+    }
+    ss << "R" << adjacent_node;
   }
   return ss.str();
 }

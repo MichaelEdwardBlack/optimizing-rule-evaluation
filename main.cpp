@@ -1,7 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
-#include "graph.h"
+#include "database.h"
 
 using namespace std;
 
@@ -19,15 +19,11 @@ int main(int argc, char* argv[]) {
 	myDatabase.doFacts(myParser.getFacts());
 
 	vector<Rule> rules = myParser.getRules();
-	Graph myGraph(rules);
-	cout << myGraph.printGraph();
-	cout << myGraph.printReverseGraph();
-	/*
-	myDatabase.doRules(myParser.getRules());
-	cout << myDatabase.printRuleResults();
+
+	cout << myDatabase.printOptimizedRuleResults(rules);
 	myDatabase.doQueries(myParser.getQueries());
 	cout << myDatabase.printQueryResults();
-	*/
+
 	in.close();
 	return 0;
 }

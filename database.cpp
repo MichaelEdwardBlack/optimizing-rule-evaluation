@@ -56,6 +56,11 @@ void Database::doRules(vector<Rule> rules) {
   vector<int> matchingColumns;
   vector<Predicate> predicates;
   int numPredicates;
+  this->numRuleEvaluations = 0;
+  bool repeat = true;
+  if (rules.size() == 1) {
+    repeat = isTrivial(rules);
+  }
 
   do {
     this->changes = false;
@@ -87,7 +92,7 @@ void Database::doRules(vector<Rule> rules) {
         this->changes = true;
       }
     }
-  } while (this->changes);
+  } while (this->changes && repeat);
 }
 
 void Database::doQueries(vector<Predicate> queries) {
@@ -98,7 +103,6 @@ void Database::doQueries(vector<Predicate> queries) {
   string tableName;
   vector<Parameter> params;
   vector<int> projectPositions;
-  //map of something to help with columncolumn select
   int numParameters;
   int numQueries = queries.size();
 
@@ -141,15 +145,60 @@ bool Database::match(string parameter) {
   return false;
 }
 
+bool Database::isTrivial(vector<Rule> rules) {
+  string head = rules.at(0).getHead().getName();
+  for (auto data : rules.at(0).getData()) {
+    if (head == data.getName()) {
+      return true;
+    }
+  }
+  return false;
+}
+
 string Database::printRuleResults() {
   stringstream result;
-  result << "Schemes populated after " << this->numRuleEvaluations
-    << " passes through the Rules.\n\n";
+  result << this->numRuleEvaluations << " passes: ";
   return result.str();
+}
+
+string Database::printOptimizedRuleResults(vector<Rule> rules) {
+  Graph tempGraph = Graph(rules);
+  stringstream ss;
+  vector<int> postOrderNumbers = tempGraph.getHighestToLowestPON();
+  map<int, set<int>> stronglyConnectedComponents = tempGraph.scc;
+
+  ss << tempGraph.printGraph();
+  ss << "Rule Evaluation\n";
+  for (auto index : postOrderNumbers) {
+    vector<Rule> rulesToEvaluate;
+    vector<int> ruleIndexes;
+    int count = 0;
+    if (stronglyConnectedComponents.at(index).size() > 0) {
+      for (auto numRule : stronglyConnectedComponents.at(index)) {
+        count++;
+        rulesToEvaluate.push_back(rules.at(numRule));
+        ruleIndexes.push_back(numRule);
+      }
+      doRules(rulesToEvaluate);
+      ss << printRuleResults();
+      for (int i = 0; i < count; i++) {
+        ss << "R" << ruleIndexes.at(i);
+        if (i < count - 1) {
+          ss << ",";
+        }
+      }
+    }
+    if (stronglyConnectedComponents.at(index).size() > 0) {
+      ss << endl;
+    }
+  }
+  ss << endl;
+  return ss.str();
 }
 
 string Database::printQueryResults() {
   stringstream result;
+  result << "Query Evaluation\n";
   int numQueries = this->queryResults.size();
   for (int i = 0; i < numQueries; i++) {
     if (this->queryResults.at(i).getNumRows() == 0) {

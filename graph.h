@@ -2,7 +2,7 @@
 #include <set>
 #include <map>
 #include "node.h"
-#include "database.h"
+#include "parser.h"
 
 class Graph {
   friend class Database;
