@@ -11,7 +11,7 @@ if [ $# = 0 ]; then
 	END=$(date +%s)
 	echo ""
 	echo "Compile Time: $(($END - $START)) seconds"
-	for i in 1 2 3 4 5 6 7 8 9
+	for i in 1 2 3 4 5 6 7 8 9 40 41 42
 	do
 		START=$(date +%s)
 		./${PROGRAM} "${INPUT_PATH}/in${i}.txt" > "${OUTPUT_PATH}/out${i}.txt"
